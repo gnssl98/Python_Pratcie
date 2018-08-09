@@ -28,7 +28,8 @@ class Buyer(object):
     
 
     def order(self, order_money):
-        sell_money, num_apples = Broker.cal(order_money)
+        broker = Broker()
+        sell_money, num_apples = broker.cal(order_money)
         self.money -= sell_money 
         self.num_apples += num_apples
 
@@ -37,14 +38,15 @@ class Buyer(object):
         
 
 class Broker(object):
-    def __init__(self, sellers):
+    def __init__(self):
         self.cheap_seller = sellers[0]
-        self.sellers = sellers
+        self.sellers = []
         self.money = 0
     
-    def select_cheap_seller(self):
+    def select_cheap_seller(self, sellers):
+        self.sellers = sellers
         for i in self.sellers:
-            if self.cheap_seller.price_apple > sellers.price_apple:
+            if self.cheap_seller.price_apple > self.sellers[i].price_apple:
                 self.cheap_seller = self.sellers[i]
         return self.cheap_seller
     
@@ -57,12 +59,12 @@ class Broker(object):
             return sell_money , self.sell_fruit(order_money)
     
     def sell_fruit(self, order_money):
-        cheap_seller = self.select_cheap_seller()
+        cheap_seller = self.cheap_seller
         num_apples = cheap_seller.cal(order_money)
         order_num_apples = order_money // cheap_seller.price_apple
         if num_apples < order_num_apples :
-            sellers.remove(self.cheap_seller)
-            self.cheap_seller = self.select_cheap_seller
+            self.sellers.remove(self.cheap_seller)
+            self.cheap_seller = select_cheap_seller(self.sellers)
             re_order_money = (order_num_apples - num_apples) * self.cheap_seller.price_apple
             self.cal(re_order_money)
         
@@ -75,8 +77,9 @@ class Broker(object):
 
 def main():
     sellers = [ Seller(3000,60), Seller(5000,50), Seller(2000, 30), Seller(1000, 10)]
-    broker = Broker(sellers)
-    buyer1 = Buyer(10000)
+    broker = Broker()
+    broker.select_cheap_seller(sellers)
+    buyer1 = Buyer(100000)
     buyer1.order(10000)
     print(broker.cheap_seller)
     print(broker)
