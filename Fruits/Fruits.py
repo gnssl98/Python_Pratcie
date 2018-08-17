@@ -8,6 +8,7 @@ class Fruit_Seller(object):
         order_nums_fruits = order_money // info_fruit[1]
         sell_money = order_nums_fruits * info_fruit[1]
         self.money += sell_money
+        self.Fruits[fruit] -= [order_nums_fruits , 0]
         return sell_money, order_num_fruits
        
     def __str__(self):
