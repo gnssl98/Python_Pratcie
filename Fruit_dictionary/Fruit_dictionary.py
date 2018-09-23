@@ -14,9 +14,6 @@ class Fruit_Buyer(object):
     def __str__(self):
         return "Buyer\nkind_fruit : {}\nnum_fruits : {}\nmoney_after_buy_fruits : {}\n--------------------------\n".format(self.kind_fruit, self.num_fruits, self.money)
 
-
-
-
 class Fruit_Seller(object):
     def __init__(self, dict_fruits):
         self.fruits = dict_fruits
@@ -47,10 +44,6 @@ def main():
     buyer1.order('apple', 10000)
     print(seller1)
     print(buyer1)
-
-
-
-
 
 if __name__ == "__main__":
     main()
