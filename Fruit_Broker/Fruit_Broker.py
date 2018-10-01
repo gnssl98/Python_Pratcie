@@ -33,6 +33,12 @@ class Fruit_Broker(object):
         total_sell_money = sell_money + self.commission
         total_sell_money = self.cal(total_sell_money, order_money, num_apples)
         seller_num_apples = self.cheap_seller.cal(sell_money, num_apples)
+        self.distinct_seller_fruit(num_apples, seller_num_apples, order_money)
+        self.commission = sell_money* 0.1
+        self.have_money += self.commission
+        return total_sell_money, num_apples
+
+    def distinct_seller_fruit(self, num_apples, seller_num_apples, order_money):
         if seller_num_apples < num_apples:
             num_apples -= seller_num_apples
             order_money -= num_apples * seller_num_apples
@@ -40,9 +46,7 @@ class Fruit_Broker(object):
             if cheap_seller in self.sellers:
                 self.sellers.remove(cheap_seller)
                 return self.order(order_money)
-        self.commission = sell_money* 0.1
-        self.have_money += self.commission
-        return total_sell_money, num_apples
+        
 
     def cal(self, total_sell_money, order_money, num_apples):
         if total_sell_money > order_money :
